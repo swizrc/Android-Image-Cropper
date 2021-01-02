@@ -26,7 +26,7 @@ final class BitmapCroppingWorkerTask
   // region: Fields and Consts
 
   /** Use a WeakReference to ensure the ImageView can be garbage collected */
-  private final WeakReference<CropImageView> mCropImageViewReference;
+  private final WeakReference<AbstractCropImageView> mCropImageViewReference;
 
   /** the bitmap to crop */
   private final Bitmap mBitmap;
@@ -71,7 +71,7 @@ final class BitmapCroppingWorkerTask
   private final boolean mFlipVertically;
 
   /** The option to handle requested width/height */
-  private final CropImageView.RequestSizeOptions mReqSizeOptions;
+  private final AbstractCropImageView.RequestSizeOptions mReqSizeOptions;
 
   /** the Android Uri to save the cropped image to */
   private final Uri mSaveUri;
@@ -84,7 +84,7 @@ final class BitmapCroppingWorkerTask
   // endregion
 
   BitmapCroppingWorkerTask(
-      CropImageView cropImageView,
+          AbstractCropImageView cropImageView,
       Bitmap bitmap,
       float[] cropPoints,
       int degreesRotated,
@@ -95,7 +95,7 @@ final class BitmapCroppingWorkerTask
       int reqHeight,
       boolean flipHorizontally,
       boolean flipVertically,
-      CropImageView.RequestSizeOptions options,
+          AbstractCropImageView.RequestSizeOptions options,
       Uri saveUri,
       Bitmap.CompressFormat saveCompressFormat,
       int saveCompressQuality) {
@@ -122,7 +122,7 @@ final class BitmapCroppingWorkerTask
   }
 
   BitmapCroppingWorkerTask(
-      CropImageView cropImageView,
+          AbstractCropImageView cropImageView,
       Uri uri,
       float[] cropPoints,
       int degreesRotated,
@@ -135,7 +135,7 @@ final class BitmapCroppingWorkerTask
       int reqHeight,
       boolean flipHorizontally,
       boolean flipVertically,
-      CropImageView.RequestSizeOptions options,
+          AbstractCropImageView.RequestSizeOptions options,
       Uri saveUri,
       Bitmap.CompressFormat saveCompressFormat,
       int saveCompressQuality) {
@@ -239,7 +239,7 @@ final class BitmapCroppingWorkerTask
     if (result != null) {
       boolean completeCalled = false;
       if (!isCancelled()) {
-        CropImageView cropImageView = mCropImageViewReference.get();
+        AbstractCropImageView cropImageView = mCropImageViewReference.get();
         if (cropImageView != null) {
           completeCalled = true;
           cropImageView.onImageCroppingAsyncComplete(result);

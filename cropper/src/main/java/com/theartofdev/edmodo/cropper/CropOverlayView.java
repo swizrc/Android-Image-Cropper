@@ -117,10 +117,10 @@ public class CropOverlayView extends View {
   private float mTargetAspectRatio = ((float) mAspectRatioX) / mAspectRatioY;
 
   /** Instance variables for customizable attributes */
-  private CropImageView.Guidelines mGuidelines;
+  private AbstractCropImageView.Guidelines mGuidelines;
 
   /** The shape of the cropping area - rectangle/circular. */
-  private CropImageView.CropShape mCropShape;
+  private AbstractCropImageView.CropShape mCropShape;
 
   /** the initial crop window rectangle to set */
   private final Rect mInitialCropWindowRect = new Rect();
@@ -196,16 +196,16 @@ public class CropOverlayView extends View {
   }
 
   /** The shape of the cropping area - rectangle/circular. */
-  public CropImageView.CropShape getCropShape() {
+  public AbstractCropImageView.CropShape getCropShape() {
     return mCropShape;
   }
 
   /** The shape of the cropping area - rectangle/circular. */
-  public void setCropShape(CropImageView.CropShape cropShape) {
+  public void setCropShape(AbstractCropImageView.CropShape cropShape) {
     if (mCropShape != cropShape) {
       mCropShape = cropShape;
         if (Build.VERSION.SDK_INT <= 17) {
-        if (mCropShape == CropImageView.CropShape.OVAL) {
+        if (mCropShape == AbstractCropImageView.CropShape.OVAL) {
           mOriginalLayerType = getLayerType();
           if (mOriginalLayerType != View.LAYER_TYPE_SOFTWARE) {
             // TURN off hardware acceleration
@@ -224,7 +224,7 @@ public class CropOverlayView extends View {
   }
 
   /** Get the current guidelines option set. */
-  public CropImageView.Guidelines getGuidelines() {
+  public AbstractCropImageView.Guidelines getGuidelines() {
     return mGuidelines;
   }
 
@@ -232,7 +232,7 @@ public class CropOverlayView extends View {
    * Sets the guidelines for the CropOverlayView to be either on, off, or to show when resizing the
    * application.
    */
-  public void setGuidelines(CropImageView.Guidelines guidelines) {
+  public void setGuidelines(AbstractCropImageView.Guidelines guidelines) {
     if (mGuidelines != guidelines) {
       mGuidelines = guidelines;
       if (initializedCropWindow) {
@@ -580,9 +580,9 @@ public class CropOverlayView extends View {
 
     if (mCropWindowHandler.showGuidelines()) {
       // Determines whether guidelines should be drawn or not
-      if (mGuidelines == CropImageView.Guidelines.ON) {
+      if (mGuidelines == AbstractCropImageView.Guidelines.ON) {
         drawGuidelines(canvas);
-      } else if (mGuidelines == CropImageView.Guidelines.ON_TOUCH && mMoveHandler != null) {
+      } else if (mGuidelines == AbstractCropImageView.Guidelines.ON_TOUCH && mMoveHandler != null) {
         // Draw only when resizing
         drawGuidelines(canvas);
       }
@@ -603,7 +603,7 @@ public class CropOverlayView extends View {
     float right = Math.min(BitmapUtils.getRectRight(mBoundsPoints), getWidth());
     float bottom = Math.min(BitmapUtils.getRectBottom(mBoundsPoints), getHeight());
 
-    if (mCropShape == CropImageView.CropShape.RECTANGLE) {
+    if (mCropShape == AbstractCropImageView.CropShape.RECTANGLE) {
       if (!isNonStraightAngleRotated() || Build.VERSION.SDK_INT <= 17) {
         canvas.drawRect(left, top, right, rect.top, mBackgroundPaint);
         canvas.drawRect(left, rect.bottom, right, bottom, mBackgroundPaint);
@@ -629,7 +629,7 @@ public class CropOverlayView extends View {
       }
     } else {
       mPath.reset();
-        if (Build.VERSION.SDK_INT <= 17 && mCropShape == CropImageView.CropShape.OVAL) {
+        if (Build.VERSION.SDK_INT <= 17 && mCropShape == AbstractCropImageView.CropShape.OVAL) {
         mDrawRect.set(rect.left + 2, rect.top + 2, rect.right - 2, rect.bottom - 2);
       } else {
         mDrawRect.set(rect.left, rect.top, rect.right, rect.bottom);
@@ -659,7 +659,7 @@ public class CropOverlayView extends View {
       float oneThirdCropWidth = rect.width() / 3;
       float oneThirdCropHeight = rect.height() / 3;
 
-      if (mCropShape == CropImageView.CropShape.OVAL) {
+      if (mCropShape == AbstractCropImageView.CropShape.OVAL) {
 
         float w = rect.width() / 2 - sw;
         float h = rect.height() / 2 - sw;
@@ -701,7 +701,7 @@ public class CropOverlayView extends View {
       RectF rect = mCropWindowHandler.getRect();
       rect.inset(w / 2, w / 2);
 
-      if (mCropShape == CropImageView.CropShape.RECTANGLE) {
+      if (mCropShape == AbstractCropImageView.CropShape.RECTANGLE) {
         // Draw rectangle crop window border.
         canvas.drawRect(rect, mBorderPaint);
       } else {
@@ -721,7 +721,7 @@ public class CropOverlayView extends View {
       // for rectangle crop shape we allow the corners to be offset from the borders
       float w =
           cornerWidth / 2
-              + (mCropShape == CropImageView.CropShape.RECTANGLE ? mBorderCornerOffset : 0);
+              + (mCropShape == AbstractCropImageView.CropShape.RECTANGLE ? mBorderCornerOffset : 0);
 
       RectF rect = mCropWindowHandler.getRect();
       rect.inset(w, w);

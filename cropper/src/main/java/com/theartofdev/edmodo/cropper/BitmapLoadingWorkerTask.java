@@ -26,7 +26,7 @@ final class BitmapLoadingWorkerTask extends AsyncTask<Void, Void, BitmapLoadingW
   // region: Fields and Consts
 
   /** Use a WeakReference to ensure the ImageView can be garbage collected */
-  private final WeakReference<CropImageView> mCropImageViewReference;
+  private final WeakReference<AbstractCropImageView> mCropImageViewReference;
 
   /** The Android URI of the image to load */
   private final Uri mUri;
@@ -41,7 +41,7 @@ final class BitmapLoadingWorkerTask extends AsyncTask<Void, Void, BitmapLoadingW
   private final int mHeight;
   // endregion
 
-  public BitmapLoadingWorkerTask(CropImageView cropImageView, Uri uri) {
+  public BitmapLoadingWorkerTask(AbstractCropImageView cropImageView, Uri uri) {
     mUri = uri;
     mCropImageViewReference = new WeakReference<>(cropImageView);
 
@@ -97,7 +97,7 @@ final class BitmapLoadingWorkerTask extends AsyncTask<Void, Void, BitmapLoadingW
     if (result != null) {
       boolean completeCalled = false;
       if (!isCancelled()) {
-        CropImageView cropImageView = mCropImageViewReference.get();
+        AbstractCropImageView cropImageView = mCropImageViewReference.get();
         if (cropImageView != null) {
           completeCalled = true;
           cropImageView.onSetImageUriAsyncComplete(result);

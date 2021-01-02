@@ -39,8 +39,8 @@ import java.io.IOException;
  * Use {@link CropImage#activity(Uri)} to create a builder to start this activity.
  */
 public class CropImageActivity extends AppCompatActivity
-    implements CropImageView.OnSetImageUriCompleteListener,
-        CropImageView.OnCropImageCompleteListener {
+    implements AbstractCropImageView.OnSetImageUriCompleteListener,
+        AbstractCropImageView.OnCropImageCompleteListener {
 
   /** The crop image view library widget used in the activity */
   private CropImageView mCropImageView;
@@ -238,7 +238,7 @@ public class CropImageActivity extends AppCompatActivity
   }
 
   @Override
-  public void onSetImageUriComplete(CropImageView view, Uri uri, Exception error) {
+  public void onSetImageUriComplete(AbstractCropImageView view, Uri uri, Exception error) {
     if (error == null) {
       if (mOptions.initialCropWindowRectangle != null) {
         mCropImageView.setCropRect(mOptions.initialCropWindowRectangle);
@@ -252,7 +252,7 @@ public class CropImageActivity extends AppCompatActivity
   }
 
   @Override
-  public void onCropImageComplete(CropImageView view, CropImageView.CropResult result) {
+  public void onCropImageComplete(AbstractCropImageView view, CropImageView.CropResult result) {
     setResult(result.getUri(), result.getError(), result.getSampleSize());
   }
 
@@ -321,6 +321,7 @@ public class CropImageActivity extends AppCompatActivity
             error,
             mCropImageView.getCropPoints(),
             mCropImageView.getCropRect(),
+            mCropImageView.getCropWindowRect(),
             mCropImageView.getRotatedDegrees(),
             mCropImageView.getWholeImageRect(),
             sampleSize);

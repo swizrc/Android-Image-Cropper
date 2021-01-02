@@ -967,6 +967,7 @@ public final class CropImage {
         Exception error,
         float[] cropPoints,
         Rect cropRect,
+        RectF cropRectF,
         int rotation,
         Rect wholeImageRect,
         int sampleSize) {
@@ -978,6 +979,7 @@ public final class CropImage {
           error,
           cropPoints,
           cropRect,
+          cropRectF,
           wholeImageRect,
           rotation,
           sampleSize);
@@ -992,6 +994,7 @@ public final class CropImage {
           (Exception) in.readSerializable(),
           in.createFloatArray(),
           (Rect) in.readParcelable(Rect.class.getClassLoader()),
+          (RectF) in.readParcelable(RectF.class.getClassLoader()),
           (Rect) in.readParcelable(Rect.class.getClassLoader()),
           in.readInt(),
           in.readInt());
