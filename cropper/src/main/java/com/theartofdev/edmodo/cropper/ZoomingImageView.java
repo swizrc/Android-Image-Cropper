@@ -57,6 +57,26 @@ public class ZoomingImageView extends AbstractCropImageView {
     mCropOverlayView.fixCurrentCropWindowRect();
   }
 
+
+
+  public Boolean isZoomingInInProgress(){
+    if (mAnimation != null){
+      return mAnimation.hasStarted() && !mAnimation.hasEnded() && mAutoZoomEnabled;
+    }
+    return false;
+  }
+
+  public Boolean isZoomingOutInProgress(){
+    if (mAnimation != null){
+      return mAnimation.hasStarted() && !mAnimation.hasEnded() && !mAutoZoomEnabled;
+    }
+    return false;
+  }
+
+  public float getZoom(){
+    return mZoom;
+  }
+
   @Override
   public void setAutoZoomEnabled(boolean autoZoomEnabled) {
     if (mAutoZoomEnabled != autoZoomEnabled) {

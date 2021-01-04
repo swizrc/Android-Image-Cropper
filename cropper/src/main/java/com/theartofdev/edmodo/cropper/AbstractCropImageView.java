@@ -1585,16 +1585,16 @@ public abstract class AbstractCropImageView extends FrameLayout {
                                 Math.min(
                                         mMaxZoom,
                                         Math.min(
-                                                width / (cropRect.width() / mZoom),
-                                                height / (cropRect.height() / mZoom)));
+                                                width / (cropRect.width() / mZoom / 0.64f),
+                                                height / (cropRect.height() / mZoom / 0.64f)));
                     }
                     if (mZoom > 1 && (cropRect.width() > width * 0.65f || cropRect.height() > height * 0.65f)) {
                         newZoom =
                                 Math.max(
                                         1,
                                         Math.min(
-                                                width / (cropRect.width() / mZoom),
-                                                height / (cropRect.height() / mZoom)));
+                                                width / (cropRect.width() / mZoom / 0.51f),
+                                                height / (cropRect.height() / mZoom / 0.51f)));
                     }
                     if (!mAutoZoomEnabled) {
                         newZoom = 1;

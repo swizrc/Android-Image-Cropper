@@ -1007,6 +1007,7 @@ public final class CropImage {
       dest.writeSerializable(getError());
       dest.writeFloatArray(getCropPoints());
       dest.writeParcelable(getCropRect(), flags);
+      dest.writeParcelable(getCropRectF(),flags);
       dest.writeParcelable(getWholeImageRect(), flags);
       dest.writeInt(getRotation());
       dest.writeInt(getSampleSize());
